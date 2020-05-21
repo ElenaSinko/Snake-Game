@@ -1,0 +1,25 @@
+.results-container {
+  width: 170px;
+  height: 170px;
+  padding: 30px;
+  text-align: center;
+  color: rgba(47, 79, 79, .7);
+  background: linear-gradient(to top, rgba(173, 230, 216, .7), rgba(254, 252, 234, .7));
+  border-radius: 130px;
+}
+
+.results-container h2 {
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+
+}
+
+
+.results-container p {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 80px;
+}

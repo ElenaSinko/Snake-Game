@@ -1,0 +1,17 @@
+.snake-element {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  box-sizing: border-box;
+  background-color: cadetblue;
+  border: 5px solid lightblue;
+  border-radius: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  margin: auto;
+  margin-top: 5px;
+  background: rgba(102, 51, 0, .7);
+}

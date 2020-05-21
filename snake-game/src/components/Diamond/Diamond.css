@@ -1,0 +1,10 @@
+.diamond {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+}
+
+.diamond img {
+  width: 30px;
+  height: 30px;
+}
