@@ -1,9 +1,10 @@
-import React from 'react';
-import Diamond from './components/Diamond/Diamond';
+import React from "react";
+import Diamond from "./components/Diamond/Diamond";
 import Snake from "./components/Snake/Snake";
 import Results from "./components/Results/Results";
 import GameControl from "./components/GameControl/GameControl";
-import './App.css';
+import Message from "./components/Message/Message";
+import "./App.css";
 
 const createDiamond = () => {
   let min = 0;
@@ -13,15 +14,18 @@ const createDiamond = () => {
   return [x, y];
 };
 
+const InitialState = {
+  snake: [[30, 0], [0, 0]],
+  diamond: createDiamond(),
+  direction: 'RIGHT',
+  score: 0,
+  speed: 200,
+  isPaused: false,
+  gameIsOver: false,
+};
+
 export default class App extends React.Component {
-  state = {
-    snake: [[30, 0], [0, 0]],
-    diamond: createDiamond(),
-    direction: 'RIGHT',
-    score: 0,
-    speed: 200,
-    isPaused: false,
-  };
+  state = InitialState;
 
   timerId = 0;
 
@@ -39,6 +43,7 @@ export default class App extends React.Component {
       case 39:
         this.setState({direction: 'RIGHT'});
         break;
+      default: break;
     }
   };
 
@@ -59,6 +64,7 @@ export default class App extends React.Component {
       case 'DOWN':
         head = [head[0], head[1] + 30];
         break;
+      default: break;
     }
 
     newSnake.unshift(head);
@@ -66,16 +72,25 @@ export default class App extends React.Component {
     this.setState({snake: newSnake})
   };
 
-  onGameOver() {
+  onGameStart = () => {
+    this.setState(InitialState);
+    this.timerId = setInterval(this.moveSnake, this.state.speed)
+  };
+
+  onGameOver = () => {
+    this.setState({snake: [[30, 30], [0, 30]], gameIsOver: true, direction: 'RIGHT'});
+    clearInterval(this.timerId);
+  };
+
+  onGame = () => {
     this.setState({
-      snake: [[30, 30], [0, 30]],
-      diamond: createDiamond(),
-      direction: 'RIGHT',
+      isPaused: true,
+      gameIsOver: false,
       score: 0,
-      speed: 200,
-      isPaused: false,
-    })
-  }
+      direction: 'RIGHT',
+    });
+    clearInterval(this.timerId);
+  };
 
   checkSelfCollision() {
     let sneak = [...this.state.snake];
@@ -98,24 +113,20 @@ export default class App extends React.Component {
   }
 
   checkDiamondCollision() {
-    let newSnake = [...this.state.snake];
-    let head = newSnake[0];
-    let que = newSnake[newSnake.length - 1];
+    let copyState = {...this.state};
+    let copySnake = copyState.snake;
+    let head = copySnake[0];
+    let que = copySnake[copySnake.length - 1];
     let diamond = this.state.diamond;
 
     if (head[0] === diamond[0] && head[1] === diamond[1]) {
       let newDiamond = createDiamond();
-      while (this.checkDiamondCollisionDuringCreation(newSnake, newDiamond)) {
+      while (this.checkDiamondCollisionDuringCreation(copySnake, newDiamond)) {
         newDiamond = createDiamond();
       }
       this.setState({diamond: newDiamond});
-      newSnake.push(que);
-      this.setState({snake: newSnake, score: this.state.score + 10})
-      if (this.state.speed > 10) {
-        this.setState({
-          speed: this.state.speed - 10
-        })
-      }
+      copySnake.push(que);
+      this.setState({snake: copySnake, score: this.state.score + 10})
     }
   }
 
@@ -127,7 +138,7 @@ export default class App extends React.Component {
   }
 
   onPauseButtonHandler = () => {
-    this.setState({isPaused: !this.state.isPaused})
+    this.setState({isPaused: !this.state.isPaused});
     if (!this.state.isPaused) {clearInterval(this.timerId)}
     if (this.state.isPaused) { this.timerId = setInterval(this.moveSnake, this.state.speed)}
   };
@@ -146,6 +157,7 @@ export default class App extends React.Component {
   render() {
     return (
         <div className="game-container">
+          {this.state.gameIsOver && <Message score={this.state.score} onGameStart={this.onGameStart} onGame={this.onGame}/>}
         <GameControl onPause={this.onPauseButtonHandler} isPaused={this.state.isPaused}/>
         <div className="game-area">
           <Diamond diamond={this.state.diamond}/>

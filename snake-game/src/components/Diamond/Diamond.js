@@ -1,6 +1,6 @@
-import React from 'react';
-import './Diamond.css';
-import diamondImg from '../../img/diamond.svg'
+import React from "react";
+import "./Diamond.css";
+import diamondImg from "../../img/diamond.svg";
 
 export default (props) => {
 
@@ -10,6 +10,6 @@ export default (props) => {
     }
 
     return (
-        <div className='diamond' style={style}><img src={diamondImg}/></div>
+        <div className='diamond' style={style}><img src={diamondImg} alt='diamond' /></div>
     )
 }

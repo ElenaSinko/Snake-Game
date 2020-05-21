@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import './Results.css';
 
 export default (props) => {
