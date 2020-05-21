@@ -7,4 +7,4 @@ Classical Snake Game created in React JS
 
 ![illustration for the project](https://github.com/ElenaSinko/Snake-Game/blob/master/snake-game/src/img/page-examples/game-page.png)
 
-[illustration for the project](https://github.com/ElenaSinko/Snake-Game/tree/master/snake-game/src/img/page-examples/score-page.png)
+![illustration for the project](https://github.com/ElenaSinko/Snake-Game/tree/master/snake-game/src/img/page-examples/score-page.png)
